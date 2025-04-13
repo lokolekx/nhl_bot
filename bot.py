@@ -9,7 +9,7 @@ from database import connect, add_user, get_user, get_all_users, DB_PATH
 api_id = int(os.environ.get("API_ID"))
 api_hash = os.environ.get("API_HASH")
 bot_token = os.environ.get("BOT_TOKEN")
-admin_id = int(os.environ.get("ADMIN_ID"))
+ADMIN_ID = int(os.environ.get("ADMIN_ID"))
 
 # Инициализация
 print(f"Текущая директория: {os.getcwd()}")
