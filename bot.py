@@ -3,7 +3,8 @@ import os
 from datetime import datetime, timedelta, timezone, date
 from pyrogram import Client, filters
 from pyrogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
-from database import connect, add_user, get_user, get_all_users, DB_PATH
+from database_postgres import connect, add_user, get_user, get_all_users
+
 
 # Конфигурация
 api_id = int(os.environ.get("API_ID"))
@@ -16,6 +17,13 @@ print(f"Текущая директория: {os.getcwd()}")
 connect()
 app = Client("hockey_predictor_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 session = {}
+
+from pyrogram.types import Message
+
+@app.on_message(filters.private & ~filters.user(ADMIN_ID))
+def ignore_unauthorized(client, message: Message):
+    return  # Игнорировать все личные сообщения от не-админа
+
 
 @app.on_message(filters.command("start"))
 def start(client, message):
