@@ -11,18 +11,18 @@ api_hash = os.environ.get("API_HASH")
 bot_token = os.environ.get("BOT_TOKEN")
 ADMIN_ID = int(os.environ.get("ADMIN_ID"))
 
+# Инициализация
+print(f"Текущая директория: {os.getcwd()}")
+connect()
+app = Client("hockey_predictor_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+session = {}
+
 from pyrogram.types import Message
 
 @app.on_message(filters.private & ~filters.user(ADMIN_ID))
 def ignore_unauthorized(client, message: Message):
     return  # Игнорировать все личные сообщения от не-админа
 
-
-# Инициализация
-print(f"Текущая директория: {os.getcwd()}")
-connect()
-app = Client("hockey_predictor_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
-session = {}
 
 @app.on_message(filters.command("start"))
 def start(client, message):
