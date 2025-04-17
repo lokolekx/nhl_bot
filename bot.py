@@ -18,18 +18,10 @@ connect()
 app = Client("hockey_predictor_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 session = {}
 
-@app.on_message()
-def log_all_messages(client, message):
-    chat = message.chat
-    user = message.from_user
-
-    print("🔔 Получено сообщение:")
-    print(f"📍 Chat ID: {chat.id}")
-    print(f"🏷 Chat Type: {chat.type}")
-    print(f"👤 From User: {user.id if user else 'N/A'} (@{user.username if user else 'N/A'})")
-    print(f"💬 Text: {message.text}")
-    print("-" * 40)
-
+@app.on_message(filters.bot)
+def block_all_bots(client, message):
+    print(f"🚫 Заблокировано сообщение от бота: {message.from_user.username}")
+    return
 
 from pyrogram.types import Message
 
