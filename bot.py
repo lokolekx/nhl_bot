@@ -5,6 +5,7 @@ from pyrogram import Client, filters
 from pyrogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from database import connect, add_user, get_user, get_all_users, DB_PATH
 
+
 # Конфигурация
 api_id = int(os.environ.get("API_ID"))
 api_hash = os.environ.get("API_HASH")
@@ -16,6 +17,26 @@ print(f"Текущая директория: {os.getcwd()}")
 connect()
 app = Client("hockey_predictor_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 session = {}
+
+@app.on_message()
+def log_all_messages(client, message):
+    chat = message.chat
+    user = message.from_user
+
+    print("🔔 Получено сообщение:")
+    print(f"📍 Chat ID: {chat.id}")
+    print(f"🏷 Chat Type: {chat.type}")
+    print(f"👤 From User: {user.id if user else 'N/A'} (@{user.username if user else 'N/A'})")
+    print(f"💬 Text: {message.text}")
+    print("-" * 40)
+
+
+from pyrogram.types import Message
+
+@app.on_message(filters.private & ~filters.user(ADMIN_ID))
+def ignore_unauthorized(client, message: Message):
+    return  # Игнорировать все личные сообщения от не-админа
+
 
 @app.on_message(filters.command("start"))
 def start(client, message):
