@@ -3,7 +3,8 @@ import os
 from datetime import datetime, timedelta, timezone, date
 from pyrogram import Client, filters
 from pyrogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
-from database import connect, add_user, get_user, get_all_users, DB_PATH
+from database_postgres import connect, add_user, get_user, get_all_users
+
 
 # Конфигурация
 api_id = int(os.environ.get("API_ID"))
