@@ -9,7 +9,7 @@ from database import connect, add_user, get_user, get_all_users, DB_PATH
 # Конфигурация
 api_id = int(os.environ.get("API_ID"))
 api_hash = os.environ.get("API_HASH")
-bot_token ="7756448158:AAG4ERZ1aqMNlnXkKyGTUW_CXQRgukyQskM"
+bot_token = os.environ.get("BOT_TOKEN")
 ADMIN_ID = int(os.environ.get("ADMIN_ID"))
 
 print("🔐 BOT_TOKEN =", bot_token)
@@ -105,9 +105,9 @@ def show_matches(client, message):
             print(f"Ошибка при обработке матча {match_id}: {e}")
 
     if keyboard:
-        message.reply_text("Выберите матч для прогноза:", reply_markup=InlineKeyboardMarkup(keyboard))
+        message.reply_text("Выберите серию для прогноза:", reply_markup=InlineKeyboardMarkup(keyboard))
     else:
-        message.reply_text("❗ Нет доступных матчей для прогнозов.")
+        message.reply_text("❗ Нет доступных серий для прогнозов.")
 
 @app.on_callback_query(filters.regex(r"^predict_\d+$"))
 def ask_for_prediction(client, callback_query):
@@ -129,7 +129,7 @@ def ask_for_prediction(client, callback_query):
     
     # Если результат уже введен, не даем делать прогноз
     if result:
-        callback_query.answer(f"Для этого матча уже введен результат: {result}")
+        callback_query.answer(f"Для этой серии уже введен результат: {result}")
         return
     
     # Сохраняем выбор пользователя в сессии
@@ -139,7 +139,7 @@ def ask_for_prediction(client, callback_query):
     callback_query.answer()
     
     # Отправляем сообщение с запросом прогноза
-    callback_query.message.reply_text(f"📝 Введите ваш прогноз для матча {team1} vs {team2} в формате 2:1")
+    callback_query.message.reply_text(f"📝 Введите ваш прогноз для серии {team1} vs {team2} в формате 2:1")
 
 @app.on_message(filters.text & filters.regex(r"^\d+:\d+$"))
 def handle_score_input(client, message):
