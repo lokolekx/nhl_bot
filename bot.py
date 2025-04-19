@@ -18,17 +18,6 @@ connect()
 app = Client("hockey_predictor_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 session = {}
 
-@app.on_message(filters.bot)
-def block_all_bots(client, message):
-    print(f"🚫 Заблокировано сообщение от бота: {message.from_user.username}")
-    return
-
-from pyrogram.types import Message
-
-@app.on_message(filters.private & ~filters.user(ADMIN_ID))
-def ignore_unauthorized(client, message: Message):
-    return  # Игнорировать все личные сообщения от не-админа
-
 
 @app.on_message(filters.command("start"))
 def start(client, message):
