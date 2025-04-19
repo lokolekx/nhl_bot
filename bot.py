@@ -9,8 +9,10 @@ from database import connect, add_user, get_user, get_all_users, DB_PATH
 # Конфигурация
 api_id = int(os.environ.get("API_ID"))
 api_hash = os.environ.get("API_HASH")
-bot_token = os.environ.get("BOT_TOKEN")
+bot_token ="7756448158:AAG4ERZ1aqMNlnXkKyGTUW_CXQRgukyQskM"
 ADMIN_ID = int(os.environ.get("ADMIN_ID"))
+
+print("🔐 BOT_TOKEN =", bot_token)
 
 # Инициализация
 print(f"Текущая директория: {os.getcwd()}")
